@@ -1,0 +1,257 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <!-- Help Section -->
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <i class="fas fa-question-circle text-primary me-2"></i>
+                        How to Use This Form
+                    </h3>
+                    <div class="alert alert-info">
+                        <h5 class="alert-heading">What is Customer Churn?</h5>
+                        <p>Customer churn occurs when customers stop using a company's services. This prediction tool helps identify customers who are likely to churn based on their characteristics and service usage patterns.</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-user me-2"></i>Personal Information</h5>
+                            <p>Fill in the customer's basic information including gender, age, and family status.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-cogs me-2"></i>Service Details</h5>
+                            <p>Select the services the customer is using and their contract type.</p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-credit-card me-2"></i>Payment Information</h5>
+                            <p>Enter the customer's payment method and monthly charges.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-chart-line me-2"></i>Results</h5>
+                            <p>After submission, you'll see the churn probability and risk level with recommendations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prediction Form -->
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">
+                        <i class="fas fa-calculator text-primary me-2"></i>
+                        Make Predictions
+                    </h2>
+
+                    <form id="prediction-form" class="needs-validation" novalidate>
+                        <!-- Personal Information -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Personal Information</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="gender" class="form-label">Gender</label>
+                                        <select class="form-select" id="gender" required>
+                                            <option value="">Select gender...</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Senior Citizen</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="senior_citizen">
+                                            <label class="form-check-label" for="senior_citizen">
+                                                Is a senior citizen
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="partner">
+                                            <label class="form-check-label" for="partner">
+                                                Has Partner
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dependents">
+                                            <label class="form-check-label" for="dependents">
+                                                Has Dependents
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Service Information -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Service Details</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="phone_service" checked>
+                                            <label class="form-check-label" for="phone_service">
+                                                Phone Service
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="multiple_lines" class="form-label">Multiple Lines</label>
+                                        <select class="form-select" id="multiple_lines" required>
+                                            <option value="">Select option...</option>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No phone service">No phone service</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="internet_service" class="form-label">Internet Service</label>
+                                        <select class="form-select" id="internet_service" required>
+                                            <option value="">Select service...</option>
+                                            <option value="DSL">DSL</option>
+                                            <option value="Fiber optic">Fiber optic</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="online_security" class="form-label">Online Security</label>
+                                        <select class="form-select" id="online_security" required>
+                                            <option value="">Select option...</option>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No internet service">No internet service</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="online_backup" class="form-label">Online Backup</label>
+                                        <select class="form-select" id="online_backup" required>
+                                            <option value="">Select option...</option>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No internet service">No internet service</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="device_protection" class="form-label">Device Protection</label>
+                                        <select class="form-select" id="device_protection" required>
+                                            <option value="">Select option...</option>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No internet service">No internet service</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="tech_support" class="form-label">Tech Support</label>
+                                        <select class="form-select" id="tech_support" required>
+                                            <option value="">Select option...</option>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No internet service">No internet service</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="streaming_tv" class="form-label">Streaming TV</label>
+                                        <select class="form-select" id="streaming_tv" required>
+                                            <option value="">Select option...</option>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No internet service">No internet service</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="streaming_movies" class="form-label">Streaming Movies</label>
+                                        <select class="form-select" id="streaming_movies" required>
+                                            <option value="">Select option...</option>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No internet service">No internet service</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contract" class="form-label">Contract</label>
+                                        <select class="form-select" id="contract" required>
+                                            <option value="">Select contract...</option>
+                                            <option value="Month-to-month">Month-to-month</option>
+                                            <option value="One year">One year</option>
+                                            <option value="Two year">Two year</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment Information -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Payment Information</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="paperless_billing">
+                                            <label class="form-check-label" for="paperless_billing">
+                                                Paperless Billing
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="payment_method" class="form-label">Payment Method</label>
+                                        <select class="form-select" id="payment_method" required>
+                                            <option value="">Select method...</option>
+                                            <option value="Electronic check">Electronic check</option>
+                                            <option value="Mailed check">Mailed check</option>
+                                            <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+                                            <option value="Credit card (automatic)">Credit card (automatic)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="monthly_charges" class="form-label">Monthly Charges ($)</label>
+                                        <input type="number" class="form-control" id="monthly_charges" 
+                                               min="0" max="200" step="0.01" value="50.00" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="tenure" class="form-label">Tenure (months)</label>
+                                        <input type="number" class="form-control" id="tenure" 
+                                               min="0" max="100" value="1" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-calculator me-2"></i>
+                                Predict Churn
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">
+                        <i class="fas fa-chart-bar text-primary me-2"></i>
+                        Customer Churn Dashboard
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Metrics -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Churn Rate</h5>
+                    <h2 class="display-4 text-primary" id="churn-rate">-</h2>
+                    <p class="text-muted">Percentage of customers who churned</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Average Tenure</h5>
+                    <h2 class="display-4 text-primary" id="avg-tenure">-</h2>
+                    <p class="text-muted">Average customer tenure in months</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Average Monthly Charges</h5>
+                    <h2 class="display-4 text-primary" id="avg-charges">-</h2>
+                    <p class="text-muted">Average monthly charges per customer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visualizations -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Churn Distribution</h5>
+                    <div id="churn-distribution" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Service Analysis</h5>
+                    <div id="service-analysis" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Contract Analysis</h5>
+                    <div id="contract-analysis" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Fetch dashboard data
+    fetch('/api/dashboard-data')
+        .then(response => response.json())
+        .then(data => {
+            // Update metrics
+            document.getElementById('churn-rate').textContent = data.metrics.churn_rate + '%';
+            document.getElementById('avg-tenure').textContent = data.metrics.avg_tenure;
+            document.getElementById('avg-charges').textContent = '$' + data.metrics.avg_charges;
+
+            // Create plots
+            Plotly.newPlot('churn-distribution', JSON.parse(data.plots.churn_distribution));
+            Plotly.newPlot('service-analysis', JSON.parse(data.plots.service_analysis));
+            Plotly.newPlot('contract-analysis', JSON.parse(data.plots.contract_analysis));
+        })
+        .catch(error => {
+            console.error('Error fetching dashboard data:', error);
+            alert('Error loading dashboard data. Please try again later.');
+        });
+});
+</script>
+{% endblock %} 
