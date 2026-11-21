@@ -75,7 +75,7 @@ def load_data(file_path=None):
     """Load the dataset from the specified file path."""
     logger.info("Starting data loading process...")
     if file_path is None:
-        file_path = os.path.join('data', 'WA_Fn-UseC_-Telco-Customer-Churn.csv')
+        file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'WA_Fn-UseC_-Telco-Customer-Churn.csv')
     
     try:
         logger.info(f"Attempting to load data from: {file_path}")
@@ -107,7 +107,7 @@ def preprocess_data(df):
     numeric_columns = ['tenure', 'MonthlyCharges', 'TotalCharges']
     for col in numeric_columns:
         df_processed[col] = pd.to_numeric(df_processed[col], errors='coerce')
-        df_processed[col].fillna(df_processed[col].median(), inplace=True)
+        df_processed[col] = df_processed[col].fillna(df_processed[col].median())
     
     # Encode categorical columns
     df_processed = encode_categorical_columns(df_processed)
@@ -149,7 +149,9 @@ def feature_engineering(df):
     )
     
     # Fill any infinite values with 0
-    df_engineered['charges_per_service'].replace([np.inf, -np.inf], 0, inplace=True)
+    df_engineered['charges_per_service'] = (
+        df_engineered['charges_per_service'].replace([np.inf, -np.inf], 0).fillna(0)
+    )
     
     # Add customerID back
     df_engineered['customerID'] = customer_ids

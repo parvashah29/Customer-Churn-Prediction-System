@@ -20,7 +20,7 @@ A comprehensive web application that predicts customer churn probability using m
 
 ## 📋 Prerequisites
 
-- Python 3.8 or higher
+- Python 3.10 or higher
 - pip (Python package installer)
 - Virtual environment (recommended)
 
@@ -28,8 +28,8 @@ A comprehensive web application that predicts customer churn probability using m
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/customer-churn-prediction.git
-cd customer-churn-prediction
+git clone https://github.com/parvashah29/Customer-Churn-Prediction-System.git
+cd Customer-Churn-Prediction-System
 ```
 
 2. Create and activate a virtual environment:
@@ -46,6 +46,12 @@ source venv/bin/activate
 3. Install required packages:
 ```bash
 pip install -r requirements.txt
+```
+> **macOS:** XGBoost needs the OpenMP runtime — run `brew install libomp` first.
+
+4. (Optional) Retrain the model — a trained model is already included in `models/`:
+```bash
+cd src && python model_training.py
 ```
 
 ## 💻 Usage
@@ -69,7 +75,7 @@ http://localhost:5000
 ## 📁 Project Structure
 
 ```
-customer-churn-prediction/
+Customer-Churn-Prediction-System/
 ├── data/                  # Dataset and data processing scripts
 ├── models/               # Trained machine learning models
 ├── src/                  # Source code

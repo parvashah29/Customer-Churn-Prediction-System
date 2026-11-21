@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify, session, send_from_d
 import pandas as pd
 import numpy as np
 import joblib
+import os
 from data_preprocessing import preprocess_data, feature_engineering
 from model_training import load_model
 import logging
@@ -14,7 +15,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-here'  # Change this to a secure secret key
+app.secret_key = os.environ.get('SECRET_KEY', 'dev-only-change-me')
 
 def load_data():
     """Load the customer churn dataset."""
@@ -191,7 +192,7 @@ def predict():
             # Drop customerID before scaling
             features = input_engineered.drop('customerID', axis=1)
             input_scaled = scaler.transform(features)
-            churn_probability = model.predict_proba(input_scaled)[0][1]
+            churn_probability = float(model.predict_proba(input_scaled)[0][1])
             logger.info(f"Prediction made successfully: {churn_probability}")
         except Exception as e:
             logger.error(f"Error making prediction: {str(e)}")
@@ -205,6 +206,9 @@ def predict():
             'risk_level': risk_level
         })
 
+    except (KeyError, TypeError, ValueError) as e:
+        logger.error(f"Invalid prediction request: {str(e)}")
+        return jsonify({'error': f'Invalid or missing input field: {e}'}), 400
     except Exception as e:
         logger.error(f"Error in prediction: {str(e)}")
         return jsonify({'error': str(e)}), 500
@@ -214,4 +218,4 @@ def send_static(path):
     return send_from_directory('static', path)
 
 if __name__ == '__main__':
-    app.run(debug=True) 
+    app.run(debug=os.environ.get('FLASK_DEBUG') == '1') 

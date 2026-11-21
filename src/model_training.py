@@ -8,6 +8,8 @@ import xgboost as xgb
 import joblib
 import os
 import logging
+
+MODELS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'models')
 from data_preprocessing import load_data, preprocess_data, feature_engineering, prepare_data_for_training
 
 # Set up logging
@@ -95,16 +97,16 @@ def save_model(model, model_name, scaler=None):
     logger.info(f"Saving {model_name}...")
     
     # Create models directory if it doesn't exist
-    os.makedirs('models', exist_ok=True)
+    os.makedirs(MODELS_DIR, exist_ok=True)
     
     # Save model
-    model_path = f'models/{model_name}.joblib'
+    model_path = os.path.join(MODELS_DIR, f'{model_name}.joblib')
     joblib.dump(model, model_path)
     logger.info(f"Model saved to {model_path}")
     
     # Save scaler if provided
     if scaler is not None:
-        scaler_path = f'models/{model_name}_scaler.joblib'
+        scaler_path = os.path.join(MODELS_DIR, f'{model_name}_scaler.joblib')
         joblib.dump(scaler, scaler_path)
         logger.info(f"Scaler saved to {scaler_path}")
 
@@ -112,12 +114,12 @@ def load_model(model_name, scaler=False):
     """Load a trained model from disk."""
     logger.info(f"Loading {model_name}...")
     try:
-        model_path = f'models/{model_name}.joblib'
+        model_path = os.path.join(MODELS_DIR, f'{model_name}.joblib')
         model = joblib.load(model_path)
         logger.info(f"Model loaded from {model_path}")
         
         if scaler:
-            scaler_path = f'models/{model_name}_scaler.joblib'
+            scaler_path = os.path.join(MODELS_DIR, f'{model_name}_scaler.joblib')
             scaler = joblib.load(scaler_path)
             logger.info(f"Scaler loaded from {scaler_path}")
             return model, scaler
